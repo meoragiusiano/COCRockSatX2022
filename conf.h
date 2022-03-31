@@ -14,4 +14,10 @@ const int dir_pin = 2;
 
 // Configuration for th SDCard
 #define chipSelect BUILTIN_SDCARD
+String message = String().reserve(10000);
+int batch_size = 100;
 // End configuration for the SDCard
+
+// Configuration for the IMU
+const long BPS_IMU = 115200;
+// End configuration for the IMU
