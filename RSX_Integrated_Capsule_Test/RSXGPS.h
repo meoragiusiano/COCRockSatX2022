@@ -3,9 +3,7 @@
 
 #include "arduino.h"
 
-
 void gps_begin();
 String get_gpgga();
-
 
 #endif

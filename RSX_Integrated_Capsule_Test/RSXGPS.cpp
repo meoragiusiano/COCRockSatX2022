@@ -1,7 +1,6 @@
 #include "conf.h"
 #include "RSXGPS.h"
 
-
 void gps_begin()
 {
   RSXGPS_SERIAL.begin(9600);
@@ -15,5 +14,5 @@ String get_gpgga()
   {
     return "";
   }
-  return gps.concat('\n');
+  return "gps:" + gps.concat('\n');
 }

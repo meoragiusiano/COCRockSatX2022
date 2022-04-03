@@ -3,12 +3,12 @@
 
 #include "arduino.h"
 
-
 // Configuration for the RFD 900+
 // netID = 73;
 #define RSXRADIO_SERIAL Serial5
 #define RADIO_BPS 57600
 #define RADIO_MESSAGE_BUFFER 10000
+#define RADIO_TIMEOUT 1000
 // End configuration for the RFD 900+
 
 // Configuration for the Stepper Motor

@@ -1,42 +1,48 @@
 #include "conf.h"
+#include "util.h"
 #include "RSXRadio.h"
-#include"RSXSDCard.h"
+#include "RSXSDCard.h"
 #include "RSXIMU.h"
 #include "RSXGPS.h"
 
+static String sd_message;
+static String temp_message;
+static int message_count = 0;
 
-String message;
-String temp;
-int message_count = 0;
-RSXRadio radio(RADIO_BPS);
-RSXIMU imu(BPS_IMU);
-
-
-void setup() {
+void setup()
+{
+  imu_begin();
   gps_begin();
+  radio_begin();
   Serial.begin(9600);
-  if (!rsx_sd_begin()) Serial.println("SD card failed");
-  message.reserve(SD_MESSAGE_BUFFER);
-  temp.reserve(100);
+  if (!rsx_sd_begin())
+    Serial.println("SD card failed");
+  begin_messages(sd_message, temp_message);
   Serial.println("System start");
 }
 
-void loop() {
-  imu.request_corrected_data();
+void loop()
+{
+  imu_request_corrected_data();
 
-  while (!imu.available());
-  temp.concat(imu.read_data());
-  temp.concat(get_gpgga());
+  while (!imu_available())
+    ;
+  temp_message.concat(imu_read_data());
+  temp_message.concat(get_gpgga());
+  log_time_stamp(temp_message);
 
-  message.concat(temp);
-  radio.write(temp);
+  sd_message.concat(temp_message);
 
-  if (is_batch_met(message_count, BATCH_SIZE)) {
-    radio.send_message();
-    if (!rsx_sd_log(message, message_count)) {
+  radio_send_message(temp_message);
+
+  if (is_batch_met(message_count, BATCH_SIZE))
+  {
+
+    if (!rsx_sd_log(sd_message, message_count))
+    {
       Serial.println("Failed to write");
     }
   }
-  Serial.print(temp);
-  temp = "";
+  Serial.print(temp_message);
+  temp_message = "";
 }

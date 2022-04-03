@@ -2,7 +2,6 @@
 #include "conf.h"
 #include "arduino.h"
 
-
 RSXRadio::RSXRadio(long bps)
 {
   RSXRADIO_SERIAL.begin(bps);
@@ -33,5 +32,28 @@ void RSXRadio::send_message()
 
 long RSXRadio::available()
 {
-  RSXRADIO_SERIAL.available();
+  return RSXRADIO_SERIAL.available();
+}
+
+void radio_begin()
+{
+  RSXRADIO_SERIAL.begin(RADIO_BPS);
+  RSXRADIO_SERIAL.setTimeout(RADIO_TIMEOUT);
+}
+
+String radio_read()
+{
+  return RSXRADIO_SERIAL.readString();
+}
+
+void radio_send_message(const String &message)
+{
+
+  RSXRADIO_SERIAL.print(message);
+}
+
+long radio_available()
+{
+
+  return RSXRADIO_SERIAL.available();
 }
