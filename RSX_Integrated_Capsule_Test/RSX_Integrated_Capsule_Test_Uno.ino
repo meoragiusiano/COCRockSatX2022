@@ -45,4 +45,5 @@ void loop()
   }
   Serial.print(temp_message);
   temp_message = "";
+  delay(5);
 }
