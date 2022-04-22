@@ -5,9 +5,9 @@
 #include "RSXIMU.h"
 #include "RSXGPS.h"
 
-static String sd_message;
-static String temp_message;
-static int message_count = 0;
+String sd_message;
+String temp_message;
+int message_count = 0;
 
 void setup()
 {
@@ -15,9 +15,9 @@ void setup()
   gps_begin();
   radio_begin();
   Serial.begin(9600);
-  if (!rsx_sd_begin())
+  if (!sd_begin(sd_message))
     Serial.println("SD card failed");
-  begin_messages(sd_message, temp_message);
+  begin_temp_message(temp_message);
   Serial.println("System start");
 }
 
@@ -35,12 +35,16 @@ void loop()
 
   radio_send_message(temp_message);
 
-  if (is_batch_met(message_count, BATCH_SIZE))
+  if (is_batch_met(message_count))
   {
 
-    if (!rsx_sd_log(sd_message, message_count))
+    if (!sd_log(sd_message))
     {
       Serial.println("Failed to write");
+    }
+    else
+    {
+      clear_sd_message(message_count, sd_message);
     }
   }
   Serial.print(temp_message);

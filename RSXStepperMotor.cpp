@@ -29,8 +29,22 @@ Important Notes:
         **connected to 8V-35V power source with a 47microF capacitor
 */
 
-#include "arduino.h"
 #include "RSXStepperMotor.h"
+#include "arduino.h"
+
+RSXMotor::RSXMotor(int spin_delay)
+{
+  /*
+  _step_pin: the pin that connects to the STEP on the stepper motor driver.
+  _dir_pin: the pin that connects to the DIR on the stepper motor driver.
+  _spin_delay: the delay between each step in microseconds.
+  */
+  _step_pin = STEP_PIN;
+  _dir_pin = DIR_PIN;
+  _spin_delay = spin_delay;
+  pinMode(step_pin, OUTPUT);
+  pinMode(dir_pin, OUTPUT);
+};
 
 RSXMotor::RSXMotor(int step_pin, int dir_pin, int spin_delay)
 {

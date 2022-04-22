@@ -1,59 +1,63 @@
 #include "RSXRadio.h"
-#include "conf.h"
 #include "arduino.h"
-
-RSXRadio::RSXRadio(long bps)
-{
-  RSXRADIO_SERIAL.begin(bps);
-  _message = "";
-  _message.reserve(RADIO_MESSAGE_BUFFER);
-}
-
-String RSXRadio::read()
-{
-  return RSXRADIO_SERIAL.readString();
-}
-
-void RSXRadio::write(String message)
-{
-  _message.concat(message);
-}
-
-void RSXRadio::write(long message)
-{
-  _message.concat(message);
-}
-
-void RSXRadio::send_message()
-{
-  RSXRADIO_SERIAL.println(_message);
-  _message = "";
-}
-
-long RSXRadio::available()
-{
-  return RSXRADIO_SERIAL.available();
-}
 
 void radio_begin()
 {
-  RSXRADIO_SERIAL.begin(RADIO_BPS);
-  RSXRADIO_SERIAL.setTimeout(RADIO_TIMEOUT);
+  RADIO_SERIAL.begin(RADIO_BAUD);
+  RADIO_SERIAL.setTimeout(RADIO_TIMEOUT);
+}
+
+void radio_begin(String &message)
+{
+  message.reserve(RADIO_MESSAGE_BUFFER);
+  RADIO_SERIAL.begin(RADIO_BAUD);
+  RADIO_SERIAL.setTimeout(RADIO_TIMEOUT);
 }
 
 String radio_read()
 {
-  return RSXRADIO_SERIAL.readString();
+  return RADIO_SERIAL.readString();
 }
 
 void radio_send_message(const String &message)
 {
-
-  RSXRADIO_SERIAL.print(message);
+  RADIO_SERIAL.print(message);
 }
 
 long radio_available()
 {
-
-  return RSXRADIO_SERIAL.available();
+  return RADIO_SERIAL.available();
 }
+
+// RSXRadio::RSXRadio(long bps)
+// {
+//   RADIO_SERIAL.begin(bps);
+//   _message = "";
+//   _message.reserve(RADIO_MESSAGE_BUFFER);
+// }
+
+// String RSXRadio::read()
+// {
+//   return RADIO_SERIAL.readString();
+// }
+
+// void RSXRadio::write(String message)
+// {
+//   _message.concat(message);
+// }
+
+// void RSXRadio::write(long message)
+// {
+//   _message.concat(message);
+// }
+
+// void RSXRadio::send_message()
+// {
+//   RADIO_SERIAL.println(_message);
+//   _message = "";
+// }
+
+// long RSXRadio::available()
+// {
+//   return RADIO_SERIAL.available();
+// }

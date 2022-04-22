@@ -1,33 +1,33 @@
-#include "conf.h"
-#include <SD.h>
-#include "arduino.h"
 #include "RSXSDCard.h"
+#include "arduino.h"
+#include <SD.h>
 
-bool rsx_sd_begin()
+bool sd_begin(String &message)
 {
   pinMode(10, OUTPUT);
+  message.reserve(SD_MESSAGE_BUFFER);
   return SD.begin(SD_CHIP_SELECT);
 }
 
-bool is_batch_met(int &count, const int batch_size)
+bool is_batch_met(int &count)
 {
-  if (count++ < batch_size)
-  {
-    return false;
-  }
-  return true;
+  return (++count < SD_BATCH_SIZE);
 }
 
-bool rsx_sd_log(String &message, int &count)
+bool sd_log(String &message)
 {
   File data_file = SD.open("datalog.txt", FILE_WRITE);
   if (data_file)
   {
     data_file.print(message);
     data_file.close();
-    message = "";
-    count = 0;
     return true;
   }
   return false;
+}
+
+void clear_sd_message(int &count, String &message)
+{
+  count = 0;
+  message = "";
 }
