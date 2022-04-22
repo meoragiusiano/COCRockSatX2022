@@ -1,3 +1,4 @@
+#include "util.h"
 #include "arduino.h"
 
 void begin_temp_message(String &message)

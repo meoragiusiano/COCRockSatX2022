@@ -9,7 +9,7 @@
 #define CORRECTED_DATA_CMD ":32\n"
 #define IMU_TIMEOUT 10
 // End configuration for the IMU
-
+;
 void imu_begin();
 void imu_request_corrected_data();
 String imu_read_data();
