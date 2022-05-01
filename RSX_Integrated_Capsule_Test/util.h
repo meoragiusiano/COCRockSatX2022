@@ -8,7 +8,7 @@
 // End configuration for utils
 
 void begin_temp_message(String &);
-void log_time_stamp(String &);
+String log_time_stamp();
 // void begin_messages(String &, String &);
 // void begin_messages(String &, String &, String &);
 

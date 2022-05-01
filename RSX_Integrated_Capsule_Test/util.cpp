@@ -1,16 +1,18 @@
-#include "util.h"
 #include "arduino.h"
+#include "util.h"
 
 void begin_temp_message(String &message)
 {
   message.reserve(TEMP_MESSAGE_BUFFER);
 }
 
-void log_time_stamp(String &temp)
+String log_time_stamp()
 {
+  String temp = "";
   temp.concat("ts:");
   temp.concat(micros() / 1000);
   temp.concat('\n');
+  return temp;
 }
 
 // void begin_messages(String &sd_message, String &temp_message)

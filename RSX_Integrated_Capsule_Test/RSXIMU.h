@@ -4,7 +4,7 @@
 #include "arduino.h"
 
 // Configuration for the IMU
-#define IMU_SERIAL Serial8
+#define IMU_SERIAL Serial3
 #define IMU_BAUD 115200
 #define CORRECTED_DATA_CMD ":32\n"
 #define IMU_TIMEOUT 10
