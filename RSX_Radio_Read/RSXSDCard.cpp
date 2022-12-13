@@ -2,6 +2,12 @@
 #include "arduino.h"
 #include <SD.h>
 
+bool sd_begin()
+{
+  pinMode(SD_CHIP_SELECT, OUTPUT);
+  return SD.begin(SD_CHIP_SELECT);
+}
+
 bool sd_begin(String &message)
 {
   pinMode(SD_CHIP_SELECT, OUTPUT);

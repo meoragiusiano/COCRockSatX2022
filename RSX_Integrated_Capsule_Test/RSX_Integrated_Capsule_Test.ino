@@ -26,6 +26,7 @@ void setup()
 
   if (!test && !sd_begin(sd_message) && ser)
     Serial.println("SD card failed");
+    else Serial.println("bruh");
   begin_temp_message(temp_message);
   if (ser)
     Serial.println("System start");
@@ -35,8 +36,7 @@ void loop()
 {
   imu_request_corrected_data();
 
-  while (!imu_available())
-    ;
+  while (!imu_available());
   temp_message.concat(imu_read_data());
   temp_message.concat(get_gpgga());
   temp_message.concat(log_time_stamp());
